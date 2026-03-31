@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+    <h2>Result Details: {{ test['name'] }}</h2>
+    <table>
+        <tr><th>Student</th><th>Achieved Marks</th><th>Graded By</th></tr>
+        {% for r in rows %}
+        <tr>
+            <td>{{ r['student_name'] }}</td>
+            <td>{{ r['marks'] }}</td>
+            <td>{{ r['graded_by'] or 'Not graded yet' }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

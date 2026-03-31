@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+    <h2>Responses for {{ test['name'] }}</h2>
+    {% for s in submissions %}
+    <div class="card">
+        <h3>{{ s['student_name'] }} <span class="muted">({{ s['submitted_at'] }})</span></h3>
+        {% for ans in answers_map[s['submission_id']] %}
+            <p><strong>{{ ans['question_text'] }}</strong><br>{{ ans['answer_text'] or '(No answer)' }}</p>
+        {% endfor %}
+        <form method="post" action="{{ url_for('grade_student', test_id=test['id'], student_id=s['student_id']) }}">
+            <div class="grid">
+                <div>
+                    <label>Grading Teacher</label>
+                    <select name="teacher_id" required>
+                        {% for t in teachers %}
+                        <option value="{{ t['id'] }}" {% if grade_by_student.get(s['student_id']) and grade_by_student.get(s['student_id'])['grader_teacher_id'] == t['id'] %}selected{% endif %}>{{ t['name'] }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div>
+                    <label>Total Marks</label>
+                    <input name="marks" type="number" step="0.01" value="{{ grade_by_student.get(s['student_id'])['total_marks'] if grade_by_student.get(s['student_id']) else '' }}" required>
+                </div>
+            </div>
+            <button type="submit">Save/Update Grade</button>
+        </form>
+    </div>
+    {% else %}
+    <p>No submissions yet.</p>
+    {% endfor %}
+</div>
+{% endblock %}

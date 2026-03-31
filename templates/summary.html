@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+    <h2>Tests Brief Information</h2>
+    <table>
+        <tr><th>Test Name</th><th>Created By</th><th>Students Took</th><th>Details</th></tr>
+        {% for r in rows %}
+        <tr>
+            <td>{{ r['name'] }}</td>
+            <td>{{ r['teacher_name'] }}</td>
+            <td>{{ r['taken_count'] }}</td>
+            <td><a class="btn" href="{{ url_for('test_results', test_id=r['id']) }}">View</a></td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

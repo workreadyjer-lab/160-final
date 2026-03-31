@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+    <h2>All Accounts</h2>
+    <form method="get">
+        <label>Filter by role</label>
+        <select name="role" onchange="this.form.submit()">
+            <option value="all" {% if role_filter == 'all' %}selected{% endif %}>All</option>
+            <option value="teacher" {% if role_filter == 'teacher' %}selected{% endif %}>Teachers</option>
+            <option value="student" {% if role_filter == 'student' %}selected{% endif %}>Students</option>
+        </select>
+    </form>
+    <table>
+        <tr><th>ID</th><th>Name</th><th>Email</th><th>Role</th><th>Student Results</th></tr>
+        {% for a in rows %}
+        <tr>
+            <td>{{ a['id'] }}</td>
+            <td>{{ a['name'] }}</td>
+            <td>{{ a['email'] }}</td>
+            <td>{{ a['role'] }}</td>
+            <td>{% if a['role'] == 'student' %}<a class="btn" href="{{ url_for('student_results', student_id=a['id']) }}">View</a>{% else %}-{% endif %}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+{% endblock %}

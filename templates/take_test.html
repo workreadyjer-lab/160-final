@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+    <h2>Take Test: {{ test['name'] }}</h2>
+    <p class="muted">Created by {{ test['teacher_name'] }}. Unlimited time.</p>
+    <form method="post">
+        <label>Select Student</label>
+        <select name="student_id" required>
+            {% for s in students %}
+            <option value="{{ s['id'] }}">{{ s['name'] }}</option>
+            {% endfor %}
+        </select>
+        {% for q in questions %}
+            <label>Q{{ q['position'] }}. {{ q['question_text'] }}</label>
+            <textarea name="answer_{{ q['id'] }}" placeholder="Answer (optional)"></textarea>
+        {% endfor %}
+        <button type="submit">Submit Test</button>
+    </form>
+</div>
+{% endblock %}

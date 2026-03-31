@@ -1,0 +1,21 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="card">
+    <h2>{% if test %}Edit{% else %}Create{% endif %} Test</h2>
+    <form method="post">
+        <label>Test Name</label>
+        <input name="name" value="{{ test['name'] if test else '' }}" required>
+        <label>Description</label>
+        <textarea name="description">{{ test['description'] if test else '' }}</textarea>
+        <label>Teacher (creator)</label>
+        <select name="teacher_id" required>
+            {% for teacher in teachers %}
+            <option value="{{ teacher['id'] }}" {% if test and test['teacher_id'] == teacher['id'] %}selected{% endif %}>{{ teacher['name'] }}</option>
+            {% endfor %}
+        </select>
+        <label>Questions (one per line)</label>
+        <textarea name="questions" required>{{ test['questions_multiline'] if test else '' }}</textarea>
+        <button type="submit">Save</button>
+    </form>
+</div>
+{% endblock %}
